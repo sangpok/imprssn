@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id        String   @id @db.Uuid
+  name      String
+  createdAt DateTime @default(now()) @db.Timestamptz()
+
+  joinedImprssnBooks ImprssnBook[]
+  writtenImprssns    Imprssn[]     @relation("author")
+  receviedImprssns   Imprssn[]     @relation("targetUser")
+}
+
+model ImprssnBook {
+  id        String   @id
+  title     String
+  endAt     DateTime @db.Timestamptz()
+  createdAt DateTime @default(now()) @db.Timestamptz()
+
+  users    User[]
+  imprssns Imprssn[]
+}
+
+model Imprssn {
+  id            Int      @id @default(autoincrement())
+  authorId      String   @db.Uuid
+  targetUserId  String   @db.Uuid
+  imprssnBookId String
+  content       String
+  createdAt     DateTime @default(now()) @db.Timestamptz()
+
+  author      User        @relation("author", fields: [authorId], references: [id])
+  targetUser  User        @relation("targetUser", fields: [targetUserId], references: [id])
+  imprssnBook ImprssnBook @relation(fields: [imprssnBookId], references: [id])
+}
