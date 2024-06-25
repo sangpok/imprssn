@@ -8,7 +8,8 @@
     "devs": "next dev --experimental-https",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.6.0",
