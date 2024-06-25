@@ -1,16 +1,13 @@
 import { addUserToImprssnBook, getImprssnBookDetails } from '@/actions/actions';
 import { createClient } from '@/lib/supabase/server';
-import { notFound } from 'next/navigation';
-import { NoAuthDialog } from './_dialogs/NoAuthDialog';
-import { revalidatePath } from 'next/cache';
-import { differenceInDays } from 'date-fns';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { BookHeartIcon, CopyIcon } from 'lucide-react';
-import { CreateImprssnForm } from '../_forms/CreateImprssnForm';
-import { ProfileCard } from './_components/ProfileCard';
 import { User } from '@prisma/client';
+import { differenceInDays } from 'date-fns';
+import { BookHeartIcon } from 'lucide-react';
+import { revalidatePath } from 'next/cache';
+import { notFound } from 'next/navigation';
 import { CopyLinkButton } from './_components/CopyLinkButton';
+import { ProfileCard } from './_components/ProfileCard';
+import { NoAuthDialog } from './_dialogs/NoAuthDialog';
 
 export default async function Page({ params }: { params: { imprssnBookId: string } }) {
   const { imprssnBookId } = params;
@@ -54,7 +51,7 @@ export default async function Page({ params }: { params: { imprssnBookId: string
     return (
       <ProfileCard
         key={member.id}
-        authorId={user.id}
+        authorId={user!.id}
         imprssnBookId={imprssnBookId}
         imprssns={targetImprssns}
         {...member}
@@ -95,20 +92,6 @@ export default async function Page({ params }: { params: { imprssnBookId: string
           <div className="w-full flex flex-col justify-center items-center">
             <p>링크 공유하기</p>
             <CopyLinkButton imprssnBookId={imprssnBookId} />
-            {/* <div className="flex flex-row gap-4">
-              <Input
-                className="w-[25rem] flex-1"
-                defaultValue={
-                  process.env.NODE_ENV === 'development'
-                    ? `http://localhost:3000/${imprssnBookId}`
-                    : `https://imprssn.vercel.app/${imprssnBookId}`
-                }
-                readOnly
-              />
-              <Button variant="outline" size="icon">
-                <CopyIcon className="w-4 h-4" />
-              </Button>
-            </div> */}
           </div>
 
           <section className="flex flex-row gap-4 flex-wrap w-full justify-center">
