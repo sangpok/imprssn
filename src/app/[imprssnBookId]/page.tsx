@@ -9,6 +9,8 @@ import { CopyLinkButton } from './_components/CopyLinkButton';
 import { ProfileCard } from './_components/ProfileCard';
 import { NoAuthDialog } from './_dialogs/NoAuthDialog';
 
+export const revalidate = 60 * 60; // 1시간;
+
 export default async function Page({ params }: { params: { imprssnBookId: string } }) {
   const { imprssnBookId } = params;
 

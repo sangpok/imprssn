@@ -7,6 +7,8 @@ import { revalidatePath } from 'next/cache';
 import { Button } from '@/components/ui/button';
 import { CreateAccountSchema } from './_forms/CreateAccountForm';
 
+export const revalidate = 60 * 60; // 1시간;
+
 export default async function Home() {
   const supabase = createClient();
 
