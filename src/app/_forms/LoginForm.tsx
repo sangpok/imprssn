@@ -13,11 +13,11 @@ import { useToast } from '@/components/ui/use-toast';
 import { User } from '@supabase/supabase-js';
 
 const formSchema = z.object({
-  id: z.string().min(2, '최소 2글자 이상 입력해주세요').max(30, '최대 50글자 이하로 입력해주세요.'),
+  id: z.string().min(6, '최소 6글자 이상 입력해주세요').max(20, '최대 20글자 이하로 입력해주세요.'),
   password: z
     .string()
-    .min(2, '최소 2글자 이상 입력해주세요')
-    .max(30, '최대 50글자 이하로 입력해주세요.'),
+    .min(6, '최소 6글자 이상 입력해주세요')
+    .max(20, '최대 20글자 이하로 입력해주세요.'),
 });
 
 export type LoginSchema = z.infer<typeof formSchema>;

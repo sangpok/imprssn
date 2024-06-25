@@ -15,7 +15,7 @@ export const IdField = ({
         <FormItem>
           <FormLabel>아이디</FormLabel>
           <FormControl>
-            <Input placeholder="2글자 이상, 30글자 미만" {...field} />
+            <Input placeholder="6글자 이상, 20글자 미만" {...field} />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -37,7 +37,7 @@ export const PasswordField = ({
         <FormItem className="flex flex-col">
           <FormLabel>비밀번호</FormLabel>
           <FormControl>
-            <Input type="password" placeholder="2글자 이상, 30글자 미만" {...field} />
+            <Input type="password" placeholder="6글자 이상, 20글자 미만" {...field} />
           </FormControl>
           <FormMessage />
         </FormItem>
