@@ -31,7 +31,7 @@ export default async function Home() {
   };
 
   return (
-    <main className="min-w-dvh min-h-dvh flex items-center justify-center">
+    <main className="min-w-full min-h-dvh flex items-center justify-center">
       {hasNoAuth && (
         <section className="w-1/2 min-w-[350px]">
           <LoginCard />
