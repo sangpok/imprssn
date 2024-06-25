@@ -45,7 +45,7 @@ export const LoginForm = ({
       const { status, data, error } = await requestLogin(values);
 
       if (status === 'success') {
-        onSuccess({ credentials: values, user: data });
+        onSuccess({ credentials: values, user: data! });
       }
 
       if (status === 'error') {

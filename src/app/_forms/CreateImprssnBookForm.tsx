@@ -45,7 +45,7 @@ export const CreateImprssnBookForm = ({
       const { status, data, error } = await requestCreateImprssnBook(values);
 
       if (status === 'success') {
-        onSuccess(data);
+        onSuccess(data!);
       }
 
       if (status === 'error') {
