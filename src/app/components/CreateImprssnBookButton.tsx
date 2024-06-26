@@ -31,7 +31,7 @@ export const CreateImprssnBookButton = ({ userId }: { userId: string }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="mt-4 w-full" variant="outline">
+        <Button className="mt-4 w-full" variant="default">
           인상기록부 만들기
         </Button>
       </DialogTrigger>
