@@ -1,5 +1,9 @@
-import { addUserToImprssnBook, getImprssnBookDetails } from '@/actions/actions';
-import { createClient } from '@/lib/supabase/server';
+import {
+  addUserToImprssnBook,
+  getCreatedImprssnBooks,
+  getImprssnBookDetails,
+  getUserDetails,
+} from '@/actions/actions';
 import { User } from '@prisma/client';
 import { differenceInDays } from 'date-fns';
 import { BookHeartIcon } from 'lucide-react';
@@ -8,22 +12,26 @@ import { notFound } from 'next/navigation';
 import { CopyLinkButton } from './_components/CopyLinkButton';
 import { ProfileCard } from './_components/ProfileCard';
 import { NoAuthDialog } from './_dialogs/NoAuthDialog';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
-export const revalidate = 60 * 60; // 1시간;
+export const revalidate = 60 * 60 * 24 * 7; // 7일
+
+export async function generateStaticParams() {
+  const imprssnBooks = await getCreatedImprssnBooks();
+
+  return imprssnBooks.map(({ id: imprssnBookId }) => ({
+    imprssnBookId,
+  }));
+}
 
 export default async function Page({ params }: { params: { imprssnBookId: string } }) {
   const { imprssnBookId } = params;
 
-  const supabase = createClient();
-
-  const [userResult, imprssnBookResult] = await Promise.all([
-    supabase.auth.getUser(),
+  const [user, imprssnBookResult] = await Promise.all([
+    getUserDetails(),
     getImprssnBookDetails({ id: imprssnBookId }),
   ]);
-
-  const {
-    data: { user },
-  } = userResult;
 
   const hasAuth = user !== null;
   const hasNoAuth = user === null;
@@ -68,7 +76,9 @@ export default async function Page({ params }: { params: { imprssnBookId: string
         <>
           <div className="flex flex-row justify-center items-center gap-2">
             <BookHeartIcon strokeWidth="2" />
-            <h1 className="text-2xl font-semibold">인상기록부: Imprssn</h1>
+            <Button className="text-2xl font-semibold px-0" variant="link" asChild>
+              <Link href="/">인상기록부: Imprssn</Link>
+            </Button>
           </div>
 
           <div>

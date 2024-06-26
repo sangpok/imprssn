@@ -1,20 +1,18 @@
+import { getUserDetails } from '@/actions/actions';
+import { Button } from '@/components/ui/button';
 import { createClient } from '@/lib/supabase/server';
+import { revalidatePath } from 'next/cache';
 import { LoginCard } from './_cards/LoginCard';
+import { CreateAccountSchema } from './_forms/CreateAccountForm';
 import { CreateImprssnBookButton } from './components/CreateImprssnBookButton';
 import { JoinedImprssnBook } from './components/JoinedImprssnBook';
 import { SignUpButton } from './components/SignUpButton';
-import { revalidatePath } from 'next/cache';
-import { Button } from '@/components/ui/button';
-import { CreateAccountSchema } from './_forms/CreateAccountForm';
+import { SignOutButton } from './[imprssnBookId]/_components/SignOutButton';
 
-export const revalidate = 60 * 60; // 1시간;
+export const revalidate = 60 * 60 * 24 * 7; // 7일
 
 export default async function Home() {
-  const supabase = createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getUserDetails();
 
   const hasAuth = user !== null;
   const hasNoAuth = user === null;
@@ -52,6 +50,7 @@ export default async function Home() {
         <section className="w-1/2 min-w-[350px]">
           <JoinedImprssnBook userId={user.id} />
           <CreateImprssnBookButton userId={user.id} />
+          <SignOutButton />
         </section>
       )}
     </main>
