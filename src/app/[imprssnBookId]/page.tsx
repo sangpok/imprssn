@@ -49,10 +49,6 @@ export default async function Page({ params }: { params: { imprssnBookId: string
     revalidatePath(`/${imprssnBookId}`);
   }
 
-  const handleSubmit = async () => {
-    'use server';
-  };
-
   const createProfileCard = (member: User) => {
     const targetImprssns = imprssnBookDetails.imprssns.filter(
       ({ targetUserId }) => targetUserId === member.id
