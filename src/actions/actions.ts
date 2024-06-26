@@ -9,6 +9,7 @@ import {
   PrismaClientUnknownRequestError,
 } from '@prisma/client/runtime/library';
 import { nanoid } from 'nanoid';
+import { revalidatePath } from 'next/cache';
 
 export const createImprssnBook = async ({ title, endAt }: { title: string; endAt: Date }) => {
   try {
@@ -252,4 +253,24 @@ export async function addImprssnToUser({
   ]);
 
   return { data: true, error: null };
+}
+
+export async function getUserDetails() {
+  const supabase = createClient();
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  return session?.user || null;
+}
+
+export async function getCreatedImprssnBooks() {
+  return await prisma.imprssnBook.findMany();
+}
+
+export async function signOut() {
+  const supabase = createClient();
+  await supabase.auth.signOut();
+  revalidatePath('/');
 }
